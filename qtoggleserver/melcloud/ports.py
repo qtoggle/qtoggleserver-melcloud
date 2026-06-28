@@ -138,7 +138,7 @@ class ChoicesPort(MELCloudDevicePort, metaclass=abc.ABCMeta):
 
     async def write_value(self, value: NullablePortValue) -> None:
         choices_str = self.get_choices_str()
-        value_str = choices_str[value - 1]
+        value_str = choices_str[int(value - 1)]
         await self.set_device_property(self.PROPERTY_NAME, value_str)
 
 
