@@ -62,34 +62,44 @@ class MELCloudDevicePort(MELCloudPort, metaclass=abc.ABCMeta):
 
 
 class DevicePowerPort(MELCloudDevicePort):
-    ADDITIONAL_ATTRDEFS = MappingProxyType({
-        "mac": MappingProxyType({
-            "display_name": "MAC Address",
-            "description": "Device MAC address",
-            "type": "string",
-            "modifiable": False,
-        }),
-        "serial": MappingProxyType({
-            "display_name": "Serial Number",
-            "description": "Device serial number",
-            "type": "string",
-            "modifiable": False,
-        }),
-        "last_seen": MappingProxyType({
-            "display_name": "Last Seen",
-            "description": "Moment when device was last seen online (UTC)",
-            "type": "string",
-            "modifiable": False,
-            "_get_transform": lambda v: v.strftime(DATETIME_FORMAT) if v else None,
-        }),
-        "wifi_signal": MappingProxyType({
-            "display_name": "Wi-Fi Signal",
-            "description": "Wi-Fi signal strength",
-            "type": "number",
-            "unit": "dBm",
-            "modifiable": False,
-        }),
-    })
+    ADDITIONAL_ATTRDEFS = MappingProxyType(
+        {
+            "mac": MappingProxyType(
+                {
+                    "display_name": "MAC Address",
+                    "description": "Device MAC address",
+                    "type": "string",
+                    "modifiable": False,
+                }
+            ),
+            "serial": MappingProxyType(
+                {
+                    "display_name": "Serial Number",
+                    "description": "Device serial number",
+                    "type": "string",
+                    "modifiable": False,
+                }
+            ),
+            "last_seen": MappingProxyType(
+                {
+                    "display_name": "Last Seen",
+                    "description": "Moment when device was last seen online (UTC)",
+                    "type": "string",
+                    "modifiable": False,
+                    "_get_transform": lambda v: v.strftime(DATETIME_FORMAT) if v else None,
+                }
+            ),
+            "wifi_signal": MappingProxyType(
+                {
+                    "display_name": "Wi-Fi Signal",
+                    "description": "Wi-Fi signal strength",
+                    "type": "number",
+                    "unit": "dBm",
+                    "modifiable": False,
+                }
+            ),
+        }
+    )
 
     TYPE = core_ports.TYPE_BOOLEAN
     WRITABLE = True
@@ -174,9 +184,11 @@ class OperationModePort(ChoicesPort):
     WRITABLE = True
     PROPERTY_NAME = "operation_mode"
     CHOICES_PROPERTY_NAME = "operation_modes"
-    DISPLAY_NAMES_MAPPING = MappingProxyType({
-        "heat_cool": "Heat/Cool",
-    })
+    DISPLAY_NAMES_MAPPING = MappingProxyType(
+        {
+            "heat_cool": "Heat/Cool",
+        }
+    )
 
 
 class FanSpeedPort(ChoicesPort):
@@ -189,17 +201,21 @@ class HorizontalVane(ChoicesPort):
     WRITABLE = True
     PROPERTY_NAME = "vane_horizontal"
     CHOICES_PROPERTY_NAME = "vane_horizontal_positions"
-    DISPLAY_NAMES_MAPPING = MappingProxyType({
-        "1_up": "1 (Up)",
-        "5_down": "5 (Down)",
-    })
+    DISPLAY_NAMES_MAPPING = MappingProxyType(
+        {
+            "1_up": "1 (Up)",
+            "5_down": "5 (Down)",
+        }
+    )
 
 
 class VerticalVane(ChoicesPort):
     WRITABLE = True
     PROPERTY_NAME = "vane_vertical"
     CHOICES_PROPERTY_NAME = "vane_vertical_positions"
-    DISPLAY_NAMES_MAPPING = MappingProxyType({
-        "1_up": "1 (Up)",
-        "5_down": "5 (Down)",
-    })
+    DISPLAY_NAMES_MAPPING = MappingProxyType(
+        {
+            "1_up": "1 (Up)",
+            "5_down": "5 (Down)",
+        }
+    )
