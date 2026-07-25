@@ -79,7 +79,7 @@ class DevicePowerPort(MELCloudDevicePort):
             "description": "Moment when device was last seen online (UTC)",
             "type": "string",
             "modifiable": False,
-            "_get_transform": lambda v: v.strftime(DATETIME_FORMAT),
+            "_get_transform": lambda v: v.strftime(DATETIME_FORMAT) if v else None,
         },
         "wifi_signal": {
             "display_name": "Wi-Fi Signal",
