@@ -1,5 +1,3 @@
-# ruff: noqa: RUF012
-
 import abc
 
 from typing import Any, cast
