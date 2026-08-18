@@ -12,6 +12,7 @@ from qtoggleserver.utils.misc import to_underscore_case
 
 class MELCloud(PolledPeripheral):
     TRIGGER_UPDATE_AFTER_POLL = True
+    POLL_AFTER_WRITE = True
 
     logger = logging.getLogger(__name__)
 
@@ -60,7 +61,6 @@ class MELCloud(PolledPeripheral):
 
         self.debug('setting "%s.%s" = "%s"', device_name, property_name, value)
         await device.set({property_name: value})
-        self._properties_cache.setdefault(device_name, {})[property_name] = value
 
     async def poll(self) -> None:
         await self._update_devices()
