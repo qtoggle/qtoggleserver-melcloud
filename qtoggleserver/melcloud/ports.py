@@ -128,7 +128,7 @@ class ChoicesPort(MELCloudDevicePort, metaclass=abc.ABCMeta):
             for i, choice in enumerate(self.get_choices_str())
         ]
 
-    async def read_value(self) -> Attribute:
+    async def read_value(self) -> NullablePortValue:
         choices_str = self.get_choices_str()
         value_str = self.get_device_property(self.PROPERTY_NAME)
         try:
