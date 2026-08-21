@@ -3,7 +3,7 @@ import abc
 from typing import Any, cast
 
 from qtoggleserver.core import ports as core_ports
-from qtoggleserver.core.typing import Attribute, NullablePortValue
+from qtoggleserver.core.typing import Attribute, NullablePortValue, PortValue
 from qtoggleserver.lib.polled import PolledPort
 
 from . import MELCloud
@@ -28,7 +28,7 @@ class MELCloudDevicePort(MELCloudPort, metaclass=abc.ABCMeta):
     async def read_value(self) -> NullablePortValue:
         return self.get_device_property(self.PROPERTY_NAME)
 
-    async def write_value(self, value: NullablePortValue) -> None:
+    async def write_value(self, value: PortValue) -> None:
         await self.set_device_property(self.PROPERTY_NAME, value)
 
     async def attr_get_value(self, name: str) -> Attribute:
@@ -136,7 +136,7 @@ class ChoicesPort(MELCloudDevicePort, metaclass=abc.ABCMeta):
         except ValueError:
             return None
 
-    async def write_value(self, value: NullablePortValue) -> None:
+    async def write_value(self, value: PortValue) -> None:
         choices_str = self.get_choices_str()
         value_str = choices_str[int(value - 1)]
         await self.set_device_property(self.PROPERTY_NAME, value_str)
