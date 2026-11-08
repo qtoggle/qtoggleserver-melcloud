@@ -74,9 +74,9 @@ class DevicePowerPort(MELCloudDevicePort):
             "type": "string",
             "modifiable": False,
         },
-        "last_seen": {
-            "display_name": "Last Seen",
-            "description": "Moment when device was last seen online (UTC)",
+        "cloud_last_seen": {
+            "display_name": "Cloud Last Seen",
+            "description": "Moment when MELCloud last saw the device online (UTC)",
             "type": "string",
             "modifiable": False,
             "_get_transform": lambda v: v.strftime(DATETIME_FORMAT) if v else None,
