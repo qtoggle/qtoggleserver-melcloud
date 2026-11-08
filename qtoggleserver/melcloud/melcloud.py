@@ -150,7 +150,7 @@ class MELCloud(PolledPeripheral):
             return device.last_seen
         except ValueError:
             # Sometimes the string value for `last_seen` comes in a different format (without microseconds suffix).
-            return self._properties_cache.get(device.name, {}).get("last_seen")
+            return self._properties_cache.get(device.name, {}).get("cloud_last_seen")
 
     def _update_cache_common(self, device: pymelcloud.Device) -> None:
         self._properties_cache.setdefault(device.name, {}).update(
@@ -158,7 +158,7 @@ class MELCloud(PolledPeripheral):
                 "mac": device.mac,
                 "serial": device.serial,
                 "temp_unit": device.temp_unit,
-                "last_seen": self._safe_get_last_seen(device),
+                "cloud_last_seen": self._safe_get_last_seen(device),
                 "power": device.power,
                 "daily_energy_consumed": device.daily_energy_consumed,
                 "wifi_signal": device.wifi_signal,
