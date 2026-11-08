@@ -73,7 +73,7 @@ class MELCloud(PolledPeripheral):
             devices = devices_by_type[device_type]
             for device in devices:
                 self.debug('updating device "%s"', device.name)
-                await device.update()
+                await self._update_device(device)
                 self._devices_cache[device.name] = device
 
                 self._update_cache_common(device)
@@ -88,6 +88,15 @@ class MELCloud(PolledPeripheral):
                     case pymelcloud.DEVICE_TYPE_ERV:
                         self._update_cache_erv(cast(pymelcloud.ErvDevice, device))
                         await self._ensure_device_erv_ports(cast(pymelcloud.ErvDevice, device))
+
+    async def _update_device(self, device: pymelcloud.Device) -> None:
+        try:
+            await device.update()
+        except aiohttp.ClientResponseError as e:
+            # `update()` fetches the energy report last, so the device state is already fresh when only that fails
+            if not e.request_info.url.path.endswith("/EnergyCost/Report"):
+                raise
+            self.warning('could not fetch energy report for device "%s": %s', device.name, e)
 
     @staticmethod
     def _get_base_port_id(device: pymelcloud.Device) -> str:
